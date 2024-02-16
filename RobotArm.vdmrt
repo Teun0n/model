@@ -1,0 +1,39 @@
+class RobotArm
+types
+instance variables
+q: real; -- current angle
+q_prime: nat; --angle rate of change
+qt: real; --target angle
+
+values
+    pi: real = 3.14;
+    r: real =0.8;
+    N1:real = 0;
+    N2:real = pi/2;
+    v:nat =1;
+
+operations
+
+public RobotArm:()==> RobotArm
+RobotArm()==(
+    q:=0;
+    qt:=pi/8;
+    q_prime:=0;
+);
+public Move_to_angle:(real) ==>()
+Move_to_angle(angle)== duration(0)(
+    qt:=angle;
+);
+    public Step: (real)==>()
+    Step(delta) == duration(0)(
+        if(q=qt) then(
+        q:=q;
+        )elseif(qt>q) then(
+        q_prime:=v;
+        q:=delta*q_prime
+        )elseif(qt<q) then(
+        q_prime:=-v;
+        q:=delta*q_prime
+        );
+    );
+end RobotArm
